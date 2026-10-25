@@ -6,7 +6,7 @@ A full-stack MERN application for tracking income and expenses. Each user has a 
 
 > The API runs on a free Render instance that sleeps after 15 minutes of inactivity. The first request after a pause can take up to a minute.
 
-![Dashboard](docs/dashboard.png)
+![Dashboard](docs/Dashboard.png)
 
 ## Features
 
