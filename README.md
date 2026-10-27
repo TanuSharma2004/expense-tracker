@@ -17,6 +17,7 @@ A full-stack MERN application for tracking income and expenses. Each user has a 
 - Monthly summary: total income, total expenses, balance and a per-category breakdown
 - Every user can only read and change their own data
 - Validation on both the client and the server (positive amounts, valid categories, no future dates)
+- Expenses can’t exceed the available balance. The rule also covers edits and deleting income.
 - Responsive interface built with Tailwind CSS
 
 ## Tech stack

@@ -33,6 +33,12 @@ function check(label, passed, detail) {
     password: "secret123",
   });
 
+  await call("POST", "/transactions", a.data.token, {
+    type: "income",
+    amount: 1000,
+    category: "Salary",
+  });
+
   // User A creates a transaction
   const created = await call("POST", "/transactions", a.data.token, {
     type: "expense",

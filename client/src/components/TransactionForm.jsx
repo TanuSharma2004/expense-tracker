@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { INCOME_CATEGORIES, EXPENSE_CATEGORIES } from "../categories";
-import { today } from "../utils";
+import { today, inr } from "../utils";
 
 const empty = {
   type: "expense",
@@ -15,7 +15,7 @@ const inputClass =
 const categoriesFor = (type) =>
   type === "income" ? INCOME_CATEGORIES : EXPENSE_CATEGORIES;
 
-export default function TransactionForm({ onAdd }) {
+export default function TransactionForm({ onAdd, available }) {
   const [form, setForm] = useState(empty);
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
@@ -34,6 +34,15 @@ export default function TransactionForm({ onAdd }) {
   const submit = async (e) => {
     e.preventDefault();
     setError("");
+    const amount = Number(form.amount);
+    if (
+      form.type === "expense" &&
+      available !== undefined &&
+      Math.round(amount * 100) > Math.round(available * 100)
+    ) {
+      setError(`Insufficient balance. You have ${inr(available)} available.`);
+      return;
+    }
     setSaving(true);
     try {
       await onAdd({ ...form, amount: Number(form.amount) });
@@ -85,6 +94,11 @@ export default function TransactionForm({ onAdd }) {
         className={inputClass}
         required
       />
+      {form.type === "expense" && available !== undefined && (
+        <p className="-mt-1 text-xs text-slate-500">
+          Available to spend: {inr(available)}
+        </p>
+      )}
       <select
         value={form.category}
         onChange={set("category")}
